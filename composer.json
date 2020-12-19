@@ -1,36 +1,39 @@
 {
-    "name": ":vendor_name/:package_name",
-    "description": ":package_description",
+    "name": "collinped/aimtell-php",
+    "description": "PHP SDk for Aimtell",
     "keywords": [
-        ":vendor_name",
-        ":package_name"
+        "collinped",
+        "aimtell-php",
+        "aimtell"
     ],
-    "homepage": "https://github.com/:vendor_name/:package_name",
+    "homepage": "https://github.com/collinped/aimtell-php",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
-            "homepage": "https://spatie.be",
+            "name": "Collin Pedersen",
+            "email": "me@collinped.com",
+            "homepage": "https://www.collinped.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": "^7.4|^8.0"
+        "php": "^7.4|^8.0",
+        "guzzlehttp/guzzle": "^7.2",
+        "ext-json": "*"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.16",
         "phpunit/phpunit": "^9.3",
-        "vimeo/psalm": "^3.11"
+        "vimeo/psalm": "^4.3"
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src"
+            "Collinped\\Aimtell\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Tests\\": "tests"
+            "Collinped\\Aimtell\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -47,11 +50,7 @@
     "funding": [
         {
             "type": "github",
-            "url": "https://github.com/sponsors/spatie"
-        },
-        {
-            "type": "other",
-            "url": "https://spatie.be/open-source/support-us"
+            "url": "https://github.com/sponsors/collinped"
         }
     ]
 }
