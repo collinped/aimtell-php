@@ -19,22 +19,22 @@ use InvalidArgumentException;
 abstract class BaseResource
 {
     /**
-     * @var Aimtell $aimtell
+     * @var Aimtell
      */
     protected Aimtell $aimtell;
 
     /**
-     * @var Client $client
+     * @var Client
      */
     protected Client $client;
 
     /**
-     * @var string|null $resourceId
+     * @var string|null
      */
     protected ?string $resourceId;
 
     /**
-     * @var bool $isSiteResource
+     * @var bool
      */
     protected bool $isSiteResource;
 
@@ -66,8 +66,8 @@ abstract class BaseResource
     {
         $endStr = '';
 
-        if (!$this->isSiteResource) {
-            if (!$siteId = $this->aimtell->getSiteId()) {
+        if (! $this->isSiteResource) {
+            if (! $siteId = $this->aimtell->getSiteId()) {
                 throw new InvalidArgumentException('Site id must be a non-empty string.');
             }
 
@@ -97,8 +97,8 @@ abstract class BaseResource
     {
         $endStr = '';
 
-        if (!$this->isSiteResource) {
-            if (!$siteId = $this->aimtell->getSiteId()) {
+        if (! $this->isSiteResource) {
+            if (! $siteId = $this->aimtell->getSiteId()) {
                 throw new InvalidArgumentException('Site id must be a non-empty string.');
             }
 
@@ -193,7 +193,7 @@ abstract class BaseResource
     {
         if ($this->isSiteResource) {
             throw new BadMethodCallException('Method is not allowed.');
-        } else if (!array_key_exists('startDate', $dates) || !array_key_exists('endDate', $dates)) {
+        } elseif (! array_key_exists('startDate', $dates) || ! array_key_exists('endDate', $dates)) {
             throw new InvalidArgumentException('Both startDate and endDate are required.');
         }
 
@@ -238,6 +238,7 @@ abstract class BaseResource
     protected function resourceName(): string
     {
         $class = explode('\\', get_called_class());
+
         return $this->camelToUnderscore(array_pop($class));
     }
 
@@ -356,7 +357,7 @@ abstract class BaseResource
                 'Content-Type' => $contentType,
                 'Accepts' => $contentType,
                 'X-Authorization-Api-Key' => $this->aimtell->getApiKey(),
-            ], $headers)
+            ], $headers),
         ];
 
         if ($whiteLabelId = $this->aimtell->getWhiteLabelId()) {
@@ -404,11 +405,11 @@ abstract class BaseResource
         if (is_array($response)) {
             if (isset($response['error'])) {
                 $error = $response['error'];
+
                 return $error['message'];
-            } else if (isset($response['message'])) {
+            } elseif (isset($response['message'])) {
                 return $response['message'];
             }
-
         }
 
         return 'An internal error has occurred.';
@@ -419,7 +420,7 @@ abstract class BaseResource
      */
     protected function confirmResourceIdNotEmpty(): void
     {
-        if (!$this->resourceId) {
+        if (! $this->resourceId) {
             throw new InvalidArgumentException('Resource id must be a non-empty string.');
         }
     }

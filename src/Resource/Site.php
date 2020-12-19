@@ -103,12 +103,14 @@ class Site extends BaseResource
         } catch (Error | BadMethodCallException $e) {
             $pattern = '~^Call to undefined method (?P<class>[^:]+)::(?P<method>[^\(]+)\(\)$~';
 
-            if (!preg_match($pattern, $e->getMessage(), $matches)) {
+            if (! preg_match($pattern, $e->getMessage(), $matches)) {
                 throw $e;
             }
 
             throw new BadMethodCallException(sprintf(
-                'Call to undefined method %s::%s()', static::class, $method
+                'Call to undefined method %s::%s()',
+                static::class,
+                $method
             ));
         }
 

@@ -16,22 +16,22 @@ use InvalidArgumentException;
 class Aimtell
 {
     /**
-     * @var string $apiKey
+     * @var string
      */
     protected string $apiKey;
 
     /**
-     * @var string|null $defaultSiteId
+     * @var string|null
      */
     protected ?string $defaultSiteId = null;
 
     /**
-     * @var string|null $whiteLabelId
+     * @var string|null
      */
     protected ?string $whiteLabelId = null;
 
     /**
-     * @var string|null $currentSiteId
+     * @var string|null
      */
     protected ?string $currentSiteId = null;
 
@@ -76,6 +76,7 @@ class Aimtell
         }
 
         $this->currentSiteId = $siteId;
+
         return $this;
     }
 
@@ -102,6 +103,7 @@ class Aimtell
         }
 
         $this->apiKey = $apiKey;
+
         return $this;
     }
 
@@ -128,6 +130,7 @@ class Aimtell
         }
 
         $this->defaultSiteId = $siteId;
+
         return $this;
     }
 
