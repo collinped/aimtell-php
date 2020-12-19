@@ -17,11 +17,14 @@ class Subscriber extends BaseResource
         $this->resourceId = $subscriberId;
     }
 
+    /**
+     * @param array $attributes
+     * @param array $data
+     * @return mixed
+     */
     public function setAttributes(array $attributes, array $data)
     {
-        $siteId = ($data['site_id'] ? $data['site_id'] : $this->siteId);
-
-        $data['idSite'] = strval($siteId);
+        $data['idSite'] = strval($this->aimtell->getSiteId());
         $data['subscriber_uid'] = $this->resourceId;
 
         $data['attributes'] = $attributes;
@@ -34,11 +37,14 @@ class Subscriber extends BaseResource
         );
     }
 
+    /**
+     * @param array $event
+     * @param array $data
+     * @return mixed
+     */
     public function trackEvent(array $event, array $data)
     {
-        $siteId = ($data['site_id'] ? $data['site_id'] : $this->siteId);
-
-        $data['idSite'] = strval($siteId);
+        $data['idSite'] = strval($this->aimtell->getSiteId());
         $data['subscriber_uid'] = $this->resourceId;
 
         $data['event'] = $event;
@@ -51,11 +57,13 @@ class Subscriber extends BaseResource
         );
     }
 
+    /**
+     * @param array $data
+     * @return mixed
+     */
     public function optOut(array $data)
     {
-        $siteId = ($data['site_id'] ? $data['site_id'] : $this->siteId);
-
-        $data['idSite'] = strval($siteId);
+        $data['idSite'] = strval($this->aimtell->getSiteId());
         $data['subscriber_uid'] = $this->resourceId;
         $data['optout'] = true;
 

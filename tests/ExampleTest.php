@@ -1,6 +1,6 @@
 <?php
 
-namespace Collinped\AimtellPhp\Tests;
+namespace Collinped\Aimtell\Tests;
 
 use PHPUnit\Framework\TestCase;
 

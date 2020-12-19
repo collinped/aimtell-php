@@ -7,30 +7,78 @@ use Collinped\Aimtell\Aimtell;
 
 class Push extends BaseResource
 {
+    /**
+     * @var int $ttl
+     */
     private int $ttl = 604800;
+
+    /**
+     * @var string|null $title
+     */
     private ?string $title = null;
+
+    /**
+     * @var string|null $message
+     */
     private ?string $message = null;
+
+    /**
+     * @var string|null $link
+     */
     private ?string $link = null;
+
+    /**
+     * @var string|null $icon
+     */
     private ?string $icon = null;
+
+    /**
+     * @var string|null $image
+     */
     private ?string $image = null;
+
+    /**
+     * @var string|null $subscribers
+     */
     private ?string $subscribers = null;
+
+    /**
+     * @var string|null $alias
+     */
     private ?string $alias = null;
+
+    /**
+     * @var int $autoHide
+     */
     private int $autoHide = 0;
+
+    /**
+     * @var int|null $segment
+     */
     private ?int $segment = null;
+
+    /**
+     * @var array $actionButtons
+     */
     private array $actionButtons = [];
 
+    /**
+     * @param Aimtell $aimtell
+     */
     public function __construct(Aimtell $aimtell)
     {
         parent::__construct($aimtell);
     }
 
+    /**
+     * Send a push notification.
+     *
+     * @param array $data
+     * @return mixed
+     */
     public function send(array $data = [])
     {
-        $siteId = (isset($data['site_id']) ? $data['site_id'] : $this->aimtell->getSiteId());
-        $data['idSite'] = $siteId; // Aimtell API Reference
-
-        // Check that at least one is filled subscribers, segment, or alias
-
+        $data['idSite'] = $this->aimtell->getSiteId(); // Aimtell API Reference
         $data['title'] = $this->title;
         $data['body'] = $this->message;
         $data['link'] = $this->link;
@@ -46,6 +94,9 @@ class Push extends BaseResource
             $data['actions'] = $this->actionButtons;
         }
 
+        // check that at least one is filled subscribers, segment, or alias
+        $this->checkPushNotification();
+
         return $this->sendRequest(
             'POST',
             $this->resourceName(),
@@ -54,69 +105,110 @@ class Push extends BaseResource
         );
     }
 
-    public function title($title = null): Push
+    /**
+     * @param string $title
+     * @return $this
+     */
+    public function title(string $title): Push
     {
         $this->title = $title;
 
         return $this;
     }
 
-    public function message($message = null): Push
+    /**
+     * @param string|null $message
+     * @return $this
+     */
+    public function message(string $message): Push
     {
         $this->message = $message;
 
         return $this;
     }
 
-    public function body($message = null): Push
+    /**
+     * @param string|null $message
+     * @return $this
+     */
+    public function body(string $message): Push
     {
         $this->message = $message;
 
         return $this;
     }
 
-    public function link($url = null): Push
+    /**
+     * @param string $url
+     * @return $this
+     */
+    public function link(string $url): Push
     {
         $this->link = $url;
 
         return $this;
     }
 
-    public function withIcon($icon = null): Push
+    /**
+     * @param string $icon
+     * @return $this
+     */
+    public function withIcon(string $icon): Push
     {
         $this->icon = $icon;
 
         return $this;
     }
 
-    public function withImage($image = null): Push
+    /**
+     * @param string $image
+     * @return $this
+     */
+    public function withImage(string $image): Push
     {
         $this->image = $image;
 
         return $this;
     }
 
-    public function ttl($seconds): Push
+    /**
+     * @param int $seconds
+     * @return $this
+     */
+    public function ttl(int $seconds): Push
     {
         $this->ttl = $seconds;
 
         return $this;
     }
 
-    public function hideAfter($seconds): Push
+    /**
+     * @param int $seconds
+     * @return $this
+     */
+    public function hideAfter(int $seconds): Push
     {
         $this->autoHide = $seconds;
 
         return $this;
     }
 
-    public function toSegment($segmentId): Push
+    /**
+     * @param string $segmentId
+     * @return $this
+     */
+    public function toSegment(string $segmentId): Push
     {
         $this->segment = $segmentId;
 
         return $this;
     }
 
+    /**
+     * @param string $identifier
+     * @param string $value
+     * @return $this
+     */
     public function toAlias(string $identifier, string $value): Push
     {
         $this->alias = $identifier . '==' . $value;
@@ -124,6 +216,10 @@ class Push extends BaseResource
         return $this;
     }
 
+    /**
+     * @param string $subscriber
+     * @return $this
+     */
     public function toSubscriber(string $subscriber): Push
     {
         $this->subscribers = $subscriber;
@@ -131,6 +227,10 @@ class Push extends BaseResource
         return $this;
     }
 
+    /**
+     * @param array $subscribers
+     * @return $this
+     */
     public function toSubscribers(array $subscribers): Push
     {
         $this->subscribers = implode(',', $subscribers);
@@ -138,6 +238,10 @@ class Push extends BaseResource
         return $this;
     }
 
+    /**
+     * @param array $button
+     * @return $this
+     */
     public function withButton(array $button): Push
     {
         $actionButtons = $this->actionButtons;
@@ -158,6 +262,10 @@ class Push extends BaseResource
         return $this;
     }
 
+    /**
+     * @param array $buttons
+     * @return $this
+     */
     public function withButtons(array $buttons): Push
     {
         foreach (array_slice($buttons, 0, 2) as $button) {
@@ -165,5 +273,10 @@ class Push extends BaseResource
         }
 
         return $this;
+    }
+
+    protected function checkPushNotification()
+    {
+
     }
 }

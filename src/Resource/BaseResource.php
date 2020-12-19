@@ -71,7 +71,7 @@ abstract class BaseResource
                 throw new InvalidArgumentException('Site id must be a non-empty string.');
             }
 
-            $endStr = '/' .strval($siteId);
+            $endStr = '/' .$siteId;
         }
 
         return $this->sendRequest(
@@ -95,19 +95,17 @@ abstract class BaseResource
      */
     public function create(array $data, array $headers = [])
     {
-        $endStr = '';
-
-        if (! $this->isSiteResource) {
-            if (! $siteId = $this->aimtell->getSiteId()) {
+        if (!$this->isSiteResource) {
+            if (!$siteId = $this->aimtell->getSiteId()) {
                 throw new InvalidArgumentException('Site id must be a non-empty string.');
             }
 
-            $endStr = '/' .strval($siteId);
+            $data['idSite'] = $siteId;
         }
 
         return $this->sendRequest(
             'POST',
-            $this->resourceName(). 's' . $endStr, // plural endpoint
+            $this->resourceName(). 's',
             [],
             $data,
             $headers
@@ -132,7 +130,7 @@ abstract class BaseResource
 
         return $this->sendRequest(
             'PUT',
-            $this->resourceName() . '/' . strval($this->resourceId),
+            $this->resourceName(). '/' .$this->resourceId,
             [],
             $data,
             $headers
@@ -154,7 +152,7 @@ abstract class BaseResource
     {
         return $this->sendRequest(
             'GET',
-            $this->resourceName().'/'.strval($id)
+            $this->resourceName(). '/' .$id
         );
     }
 
@@ -174,7 +172,7 @@ abstract class BaseResource
 
         return $this->sendRequest(
             'DELETE',
-            $this->resourceName().'/'.strval($this->resourceId)
+            $this->resourceName(). '/' .$this->resourceId
         );
     }
 
@@ -201,7 +199,7 @@ abstract class BaseResource
 
         return $this->sendRequest(
             'GET',
-            $this->resourceName().'/'.strval($this->resourceId) . '/results',
+            $this->resourceName(). '/' .$this->resourceId. '/results',
             $dates
         );
     }
@@ -226,7 +224,7 @@ abstract class BaseResource
 
         return $this->sendRequest(
             'GET',
-            $this->resourceName().'/'.strval($this->resourceId) . '/clicks'
+            $this->resourceName(). '/' .$this->resourceId. '/clicks'
         );
     }
 
@@ -329,7 +327,7 @@ abstract class BaseResource
      */
     protected function getPath(string $path, array $query = []): string
     {
-        $path = '/prod/'.$path;
+        $path = strval('/prod/'.$path);
         $queryString = '';
 
         if (! empty($query)) {

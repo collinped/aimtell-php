@@ -36,7 +36,7 @@ class Aimtell
     protected ?string $currentSiteId = null;
 
     /**
-     * @param string|null $apiKey
+     * @param string $apiKey
      * @param string|null $defaultSiteId
      * @param string|null $whiteLabelId
      */
