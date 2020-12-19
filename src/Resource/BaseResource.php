@@ -13,7 +13,6 @@ use Collinped\Aimtell\Exception\UnexpectedErrorException;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
-use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
 
 abstract class BaseResource
