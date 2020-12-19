@@ -117,7 +117,7 @@ class Push extends BaseResource
     }
 
     /**
-     * @param string|null $message
+     * @param string $message
      * @return $this
      */
     public function message(string $message): Push
@@ -128,7 +128,7 @@ class Push extends BaseResource
     }
 
     /**
-     * @param string|null $message
+     * @param string $message
      * @return $this
      */
     public function body(string $message): Push

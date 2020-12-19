@@ -287,7 +287,7 @@ abstract class BaseResource
             throw new NetworkErrorException($e->getMessage());
         } catch (\GuzzleHttp\Exception\InvalidArgumentException $e) {
             throw new RequestException($e->getMessage());
-        } catch (GuzzleException $e) {
+        } catch (\GuzzleHttp\Exception\RequestException $e) {
             if (! $e->hasResponse()) {
                 throw new UnexpectedErrorException('An Unexpected Error has occurred: ' . $e->getMessage());
             }
@@ -342,7 +342,7 @@ abstract class BaseResource
      *
      * @param array $body
      * @param array $headers
-     * @return array[]
+     * @return array
      */
     protected function getOptions(array $body = [], array $headers = []): array
     {
