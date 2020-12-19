@@ -95,8 +95,8 @@ abstract class BaseResource
      */
     public function create(array $data, array $headers = [])
     {
-        if (!$this->isSiteResource) {
-            if (!$siteId = $this->aimtell->getSiteId()) {
+        if (! $this->isSiteResource) {
+            if (! $siteId = $this->aimtell->getSiteId()) {
                 throw new InvalidArgumentException('Site id must be a non-empty string.');
             }
 

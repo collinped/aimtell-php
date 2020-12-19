@@ -8,57 +8,57 @@ use Collinped\Aimtell\Aimtell;
 class Push extends BaseResource
 {
     /**
-     * @var int $ttl
+     * @var int
      */
     private int $ttl = 604800;
 
     /**
-     * @var string|null $title
+     * @var string|null
      */
     private ?string $title = null;
 
     /**
-     * @var string|null $message
+     * @var string|null
      */
     private ?string $message = null;
 
     /**
-     * @var string|null $link
+     * @var string|null
      */
     private ?string $link = null;
 
     /**
-     * @var string|null $icon
+     * @var string|null
      */
     private ?string $icon = null;
 
     /**
-     * @var string|null $image
+     * @var string|null
      */
     private ?string $image = null;
 
     /**
-     * @var string|null $subscribers
+     * @var string|null
      */
     private ?string $subscribers = null;
 
     /**
-     * @var string|null $alias
+     * @var string|null
      */
     private ?string $alias = null;
 
     /**
-     * @var int $autoHide
+     * @var int
      */
     private int $autoHide = 0;
 
     /**
-     * @var int|null $segment
+     * @var int|null
      */
     private ?int $segment = null;
 
     /**
-     * @var array $actionButtons
+     * @var array
      */
     private array $actionButtons = [];
 
@@ -277,6 +277,5 @@ class Push extends BaseResource
 
     protected function checkPushNotification()
     {
-
     }
 }
