@@ -53,9 +53,9 @@ class Push extends BaseResource
     private int $autoHide = 0;
 
     /**
-     * @var int|null
+     * @var string|null
      */
-    private ?int $segment = null;
+    private ?string $segment = null;
 
     /**
      * @var array
