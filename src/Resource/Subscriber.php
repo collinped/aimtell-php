@@ -8,6 +8,18 @@ use Collinped\Aimtell\Aimtell;
 class Subscriber extends BaseResource
 {
     /**
+     * Protect assigned methods from being executed by a resource.
+     *
+     * @var array
+     */
+    protected array $guarded = [
+        'create',
+        'update',
+        'delete',
+        'getResultsByDate',
+    ];
+
+    /**
      * @param Aimtell $aimtell
      * @param string|null $subscriberId
      */

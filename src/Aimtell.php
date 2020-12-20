@@ -56,7 +56,7 @@ class Aimtell
     }
 
     /**
-     * Set the current site id.
+     * Get the current site id.
      *
      * @return string|null
      */

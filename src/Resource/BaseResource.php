@@ -10,11 +10,13 @@ use Collinped\Aimtell\Exception\AuthorizationException;
 use Collinped\Aimtell\Exception\NetworkErrorException;
 use Collinped\Aimtell\Exception\RequestException;
 use Collinped\Aimtell\Exception\UnexpectedErrorException;
-use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
+use Error;
+use Exception;
 
 abstract class BaseResource
 {
@@ -72,6 +74,7 @@ abstract class BaseResource
      */
     public function all(array $query = [])
     {
+        $this->guardMethod(__FUNCTION__);
         $endStr = '';
 
         if (! $this->isSiteResource) {
@@ -104,6 +107,8 @@ abstract class BaseResource
      */
     public function create(array $data, array $headers = [])
     {
+        $this->guardMethod(__FUNCTION__);
+
         if (! $this->isSiteResource) {
             if (! $siteId = $this->aimtell->getSiteId()) {
                 throw new InvalidArgumentException('A valid site id is required.');
@@ -136,6 +141,7 @@ abstract class BaseResource
      */
     public function update(array $data, array $headers = [])
     {
+        $this->guardMethod(__FUNCTION__);
         $this->confirmResourceIdNotEmpty();
 
         return $this->sendRequest(
@@ -161,6 +167,8 @@ abstract class BaseResource
      */
     public function find(string $id)
     {
+        $this->guardMethod(__FUNCTION__);
+
         return $this->sendRequest(
             'GET',
             $this->resourceName(). '/' .$id
@@ -180,6 +188,7 @@ abstract class BaseResource
      */
     public function delete()
     {
+        $this->guardMethod(__FUNCTION__);
         $this->confirmResourceIdNotEmpty();
 
         return $this->sendRequest(
@@ -200,8 +209,10 @@ abstract class BaseResource
      * @throws UnexpectedErrorException
      * @throws GuzzleException
      */
-    public function getResultsByDates(array $dates = [])
+    public function getResultsByDate(array $dates = [])
     {
+        $this->guardMethod(__FUNCTION__);
+
         if ($this->isSiteResource) {
             throw new BadMethodCallException('Method is not allowed.');
         } elseif (! array_key_exists('startDate', $dates) || ! array_key_exists('endDate', $dates)) {
@@ -214,31 +225,6 @@ abstract class BaseResource
             'GET',
             $this->resourceName(). '/' .$this->resourceId. '/results',
             $dates
-        );
-    }
-
-    /**
-     * Get aggregate resource results by clicks.
-     *
-     * @return mixed
-     * @throws AimtellException
-     * @throws AuthorizationException
-     * @throws NetworkErrorException
-     * @throws RequestException
-     * @throws UnexpectedErrorException
-     * @throws GuzzleException
-     */
-    public function getClicks()
-    {
-        if ($this->isSiteResource) {
-            throw new BadMethodCallException('Method is not allowed.');
-        }
-
-        $this->confirmResourceIdNotEmpty();
-
-        return $this->sendRequest(
-            'GET',
-            $this->resourceName(). '/' .$this->resourceId. '/clicks'
         );
     }
 
@@ -304,10 +290,15 @@ abstract class BaseResource
                 $this->getPath($path, $query),
                 $this->getOptions($body, $headers)
             );
+
+            $response = json_decode(strval($response->getBody()), true);
         } catch (ConnectException $e) {
             throw new NetworkErrorException($e->getMessage());
-        } catch (\GuzzleHttp\Exception\InvalidArgumentException $e) {
-            throw new RequestException($e->getMessage());
+        } catch (ClientException $e) {
+            throw new RequestException(
+                $this->errorMessageFromJsonBody(strval($e->getResponse()->getBody())),
+                $e->getResponse()->getStatusCode()
+            );
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             if (! $e->hasResponse()) {
                 throw new UnexpectedErrorException('An unexpected error has occurred: ' . $e->getMessage());
@@ -329,8 +320,6 @@ abstract class BaseResource
         } catch (Exception $e) {
             throw new UnexpectedErrorException('An unexpected error has occurred: ' . $e->getMessage());
         }
-
-        $response = json_decode(strval($response->getBody()), true);
 
         if (isset($response['result']) && $response['result'] === 'error') {
             throw new AimtellException($response['message']);
@@ -442,5 +431,51 @@ abstract class BaseResource
         if (! $this->resourceId) {
             throw new InvalidArgumentException('A valid resource id is required.');
         }
+    }
+
+    /**
+     * @param string $method
+     */
+    protected function guardMethod(string $method): void
+    {
+        if (in_array($method, $this->guarded)) {
+            throw new BadMethodCallException(sprintf(
+                'Call to prohibited method %s::%s()',
+                static::class,
+                $method
+            ));
+        }
+    }
+
+    /**
+     * Handle dynamic method calls to resources.
+     *
+     * @param  string  $method
+     * @param  array  $arguments
+     * @return mixed
+     */
+    public function __call(string $method, array $arguments)
+    {
+        if ($this->isSiteResource && $this->resourceId) {
+            $this->aimtell->setSiteId($this->resourceId);
+        }
+
+        try {
+            $resolver = $this->aimtell->{$method}(...$arguments);
+        } catch (Error | BadMethodCallException $e) {
+            $pattern = '~^Call to undefined method (?P<class>[^:]+)::(?P<method>[^\(]+)\(\)$~';
+
+            if (! preg_match($pattern, $e->getMessage(), $matches)) {
+                throw $e;
+            }
+
+            throw new BadMethodCallException(sprintf(
+                'Call to undefined method %s::%s()',
+                static::class,
+                $method
+            ));
+        }
+
+        return $resolver;
     }
 }

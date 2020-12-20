@@ -3,9 +3,7 @@
 
 namespace Collinped\Aimtell\Resource;
 
-use BadMethodCallException;
 use Collinped\Aimtell\Aimtell;
-use Error;
 
 class Site extends BaseResource
 {
@@ -129,45 +127,5 @@ class Site extends BaseResource
             'report/dashboard/'.strval($this->resourceId),
             $query
         );
-    }
-
-    /**
-     * Handle dynamic method calls to resources.
-     *
-     * @param  string  $method
-     * @param  array  $arguments
-     * @return mixed
-     */
-    public function __call(string $method, array $arguments)
-    {
-        if (in_array($method, $this->guarded)) {
-            throw new BadMethodCallException(sprintf(
-                'Call to undefined method %s::%s()',
-                static::class,
-                $method
-            ));
-        }
-
-        if ($this->resourceId) {
-            $this->aimtell->setSiteId($this->resourceId);
-        }
-
-        try {
-            $resolver = $this->aimtell->{$method}(...$arguments);
-        } catch (Error | BadMethodCallException $e) {
-            $pattern = '~^Call to undefined method (?P<class>[^:]+)::(?P<method>[^\(]+)\(\)$~';
-
-            if (! preg_match($pattern, $e->getMessage(), $matches)) {
-                throw $e;
-            }
-
-            throw new BadMethodCallException(sprintf(
-                'Call to undefined method %s::%s()',
-                static::class,
-                $method
-            ));
-        }
-
-        return $resolver;
     }
 }

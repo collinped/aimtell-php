@@ -13,8 +13,7 @@ class Segment extends BaseResource
      * @var array
      */
     protected array $guarded = [
-        'getResultsByDates',
-        'getClicks',
+        'getResultsByDate',
     ];
 
     /**
