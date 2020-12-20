@@ -39,6 +39,13 @@ abstract class BaseResource
     protected bool $isSiteResource;
 
     /**
+     * Protect assigned methods from being executed by a resource.
+     *
+     * @var array
+     */
+    protected array $guarded = [];
+
+    /**
      * @param Aimtell $aimtell
      */
     public function __construct(Aimtell $aimtell)

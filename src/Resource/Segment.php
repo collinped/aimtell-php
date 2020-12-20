@@ -8,6 +8,16 @@ use Collinped\Aimtell\Aimtell;
 class Segment extends BaseResource
 {
     /**
+     * Protect assigned methods from being executed by a resource.
+     *
+     * @var array
+     */
+    protected array $guarded = [
+        'getResultsByDates',
+        'getClicks',
+    ];
+
+    /**
      * Segment constructor.
      * @param Aimtell $aimtell
      * @param string|null $segmentId

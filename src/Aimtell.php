@@ -16,9 +16,9 @@ use InvalidArgumentException;
 class Aimtell
 {
     /**
-     * @var string
+     * @var string|null
      */
-    protected string $apiKey;
+    protected ?string $apiKey = null;
 
     /**
      * @var string|null
@@ -40,7 +40,7 @@ class Aimtell
      * @param string|null $defaultSiteId
      * @param string|null $whiteLabelId
      */
-    public function __construct(?string $apiKey, ?string $defaultSiteId = null, ?string $whiteLabelId = null)
+    public function __construct(?string $apiKey = null, ?string $defaultSiteId = null, ?string $whiteLabelId = null)
     {
         if (! is_null($defaultSiteId)) {
             $this->setApiKey($apiKey);

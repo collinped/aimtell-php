@@ -140,6 +140,14 @@ class Site extends BaseResource
      */
     public function __call(string $method, array $arguments)
     {
+        if (in_array($method, $this->guarded)) {
+            throw new BadMethodCallException(sprintf(
+                'Call to undefined method %s::%s()',
+                static::class,
+                $method
+            ));
+        }
+
         if ($this->resourceId) {
             $this->aimtell->setSiteId($this->resourceId);
         }
