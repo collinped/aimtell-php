@@ -42,7 +42,9 @@ class Aimtell
      */
     public function __construct(?string $apiKey, ?string $defaultSiteId = null, ?string $whiteLabelId = null)
     {
-        $this->setApiKey($apiKey);
+        if (! is_null($defaultSiteId)) {
+            $this->setApiKey($apiKey);
+        }
 
         if (! is_null($defaultSiteId)) {
             $this->setDefaultSiteId($defaultSiteId);

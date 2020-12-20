@@ -13,6 +13,7 @@ use Collinped\Aimtell\Exception\UnexpectedErrorException;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
 
 abstract class BaseResource
@@ -60,6 +61,7 @@ abstract class BaseResource
      * @throws NetworkErrorException
      * @throws RequestException
      * @throws UnexpectedErrorException
+     * @throws GuzzleException
      */
     public function all(array $query = [])
     {
@@ -91,6 +93,7 @@ abstract class BaseResource
      * @throws NetworkErrorException
      * @throws RequestException
      * @throws UnexpectedErrorException
+     * @throws GuzzleException
      */
     public function create(array $data, array $headers = [])
     {
@@ -122,6 +125,7 @@ abstract class BaseResource
      * @throws NetworkErrorException
      * @throws RequestException
      * @throws UnexpectedErrorException
+     * @throws GuzzleException
      */
     public function update(array $data, array $headers = [])
     {
@@ -146,6 +150,7 @@ abstract class BaseResource
      * @throws NetworkErrorException
      * @throws RequestException
      * @throws UnexpectedErrorException
+     * @throws GuzzleException
      */
     public function find(string $id)
     {
@@ -164,6 +169,7 @@ abstract class BaseResource
      * @throws NetworkErrorException
      * @throws RequestException
      * @throws UnexpectedErrorException
+     * @throws GuzzleException
      */
     public function delete()
     {
@@ -185,6 +191,7 @@ abstract class BaseResource
      * @throws NetworkErrorException
      * @throws RequestException
      * @throws UnexpectedErrorException
+     * @throws GuzzleException
      */
     public function getResultsByDates(array $dates = [])
     {
@@ -212,6 +219,7 @@ abstract class BaseResource
      * @throws NetworkErrorException
      * @throws RequestException
      * @throws UnexpectedErrorException
+     * @throws GuzzleException
      */
     public function getClicks()
     {
@@ -268,14 +276,21 @@ abstract class BaseResource
      * @param array $body
      * @param array $headers
      * @return mixed
+     * @throws AimtellException
      * @throws AuthorizationException
      * @throws NetworkErrorException
      * @throws RequestException
      * @throws UnexpectedErrorException
-     * @throws AimtellException
+     * @throws GuzzleException
      */
     protected function sendRequest($method, $path, array $query = [], array $body = [], array $headers = [])
     {
+        $apiKey = $this->aimtell->getApiKey();
+
+        if (! is_string($apiKey) || empty($apiKey)) {
+            throw new InvalidArgumentException('A valid site id is required.');
+        }
+
         try {
             $response = $this->client->request(
                 $method,
