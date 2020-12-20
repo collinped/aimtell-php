@@ -10,13 +10,13 @@ use Collinped\Aimtell\Exception\AuthorizationException;
 use Collinped\Aimtell\Exception\NetworkErrorException;
 use Collinped\Aimtell\Exception\RequestException;
 use Collinped\Aimtell\Exception\UnexpectedErrorException;
+use Error;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
 use InvalidArgumentException;
-use Error;
-use Exception;
 
 abstract class BaseResource
 {
