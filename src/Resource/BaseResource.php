@@ -295,7 +295,7 @@ abstract class BaseResource
         $apiKey = $this->aimtell->getApiKey();
 
         if (! is_string($apiKey) || empty($apiKey)) {
-            throw new InvalidArgumentException('A valid site id is required.');
+            throw new InvalidArgumentException('A valid API key is required.');
         }
 
         try {
