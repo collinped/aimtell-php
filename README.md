@@ -1,8 +1,8 @@
 # Aimtell PHP SDK
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/collinped/laravel-aimtell.svg?style=flat-square)](https://packagist.org/packages/collinped/laravel-aimtell)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/collinped/laravel-aimtell/run-tests?label=tests&style=flat-square)](https://github.com/collinped/laravel-aimtell/actions?query=workflow%3Arun-tests+branch%3Amaster)
-[![Total Downloads](https://img.shields.io/packagist/dt/collinped/laravel-aimtell.svg?style=flat-square)](https://packagist.org/packages/collinped/laravel-aimtell)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/collinped/aimtell-php.svg?style=flat-square)](https://packagist.org/packages/collinped/aimtell-php)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/collinped/aimtell-php/run-tests?label=tests&style=flat-square)](https://github.com/collinped/aimtell-php/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![Total Downloads](https://img.shields.io/packagist/dt/collinped/aimtell-php.svg?style=flat-square)](https://packagist.org/packages/collinped/aimtell-php)
 
 [Aimtell](https://aimtell.com/) offers a service for push notifications to users who give permission. This package allows for interfacing with Aimtell's backend API to manage your account.
 
