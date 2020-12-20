@@ -36,11 +36,11 @@ class Aimtell
     protected ?string $currentSiteId = null;
 
     /**
-     * @param string $apiKey
+     * @param string|null $apiKey
      * @param string|null $defaultSiteId
      * @param string|null $whiteLabelId
      */
-    public function __construct(string $apiKey, ?string $defaultSiteId = null, ?string $whiteLabelId = null)
+    public function __construct(?string $apiKey, ?string $defaultSiteId = null, ?string $whiteLabelId = null)
     {
         $this->setApiKey($apiKey);
 
@@ -72,7 +72,7 @@ class Aimtell
     public function setSiteId(?string $siteId): Aimtell
     {
         if (! is_string($siteId) || empty($siteId)) {
-            throw new InvalidArgumentException('Site id must be a non-empty string.');
+            throw new InvalidArgumentException('A valid site id is required.');
         }
 
         $this->currentSiteId = $siteId;
@@ -99,7 +99,7 @@ class Aimtell
     public function setApiKey($apiKey): Aimtell
     {
         if (! is_string($apiKey) || empty($apiKey)) {
-            throw new InvalidArgumentException('API Key must be a non-empty string.');
+            throw new InvalidArgumentException('A valid API key is required.');
         }
 
         $this->apiKey = $apiKey;
@@ -126,7 +126,7 @@ class Aimtell
     public function setDefaultSiteId($siteId): Aimtell
     {
         if (! is_string($siteId) || empty($siteId)) {
-            throw new InvalidArgumentException('Default site id must be a non-empty string.');
+            throw new InvalidArgumentException('A valid default site id is required.');
         }
 
         $this->defaultSiteId = $siteId;
@@ -153,7 +153,7 @@ class Aimtell
     public function setWhitelabelId($whiteLabelId): Aimtell
     {
         if (! is_string($whiteLabelId) || empty($whiteLabelId)) {
-            throw new InvalidArgumentException('White label id must be a non-empty string.');
+            throw new InvalidArgumentException('A valid white label id is required.');
         }
 
         $this->whiteLabelId = $whiteLabelId;

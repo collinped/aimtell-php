@@ -67,7 +67,7 @@ abstract class BaseResource
 
         if (! $this->isSiteResource) {
             if (! $siteId = $this->aimtell->getSiteId()) {
-                throw new InvalidArgumentException('Site id must be a non-empty string.');
+                throw new InvalidArgumentException('A valid site id is required.');
             }
 
             $endStr = '/' .$siteId;
@@ -96,7 +96,7 @@ abstract class BaseResource
     {
         if (! $this->isSiteResource) {
             if (! $siteId = $this->aimtell->getSiteId()) {
-                throw new InvalidArgumentException('Site id must be a non-empty string.');
+                throw new InvalidArgumentException('A valid site id is required.');
             }
 
             $data['idSite'] = $siteId;
@@ -288,7 +288,7 @@ abstract class BaseResource
             throw new RequestException($e->getMessage());
         } catch (\GuzzleHttp\Exception\RequestException $e) {
             if (! $e->hasResponse()) {
-                throw new UnexpectedErrorException('An Unexpected Error has occurred: ' . $e->getMessage());
+                throw new UnexpectedErrorException('An unexpected error has occurred: ' . $e->getMessage());
             }
 
             $responseErrorBody = strval($e->getResponse()->getBody());
@@ -303,9 +303,9 @@ abstract class BaseResource
                 throw new RequestException($errorMessage, 400);
             }
 
-            throw new UnexpectedErrorException('An Unexpected Error has occurred: ' . $e->getMessage());
+            throw new UnexpectedErrorException('An unexpected error has occurred: ' . $e->getMessage());
         } catch (Exception $e) {
-            throw new UnexpectedErrorException('An Unexpected Error has occurred: ' . $e->getMessage());
+            throw new UnexpectedErrorException('An unexpected error has occurred: ' . $e->getMessage());
         }
 
         $response = json_decode(strval($response->getBody()), true);
@@ -418,7 +418,7 @@ abstract class BaseResource
     protected function confirmResourceIdNotEmpty(): void
     {
         if (! $this->resourceId) {
-            throw new InvalidArgumentException('Resource id must be a non-empty string.');
+            throw new InvalidArgumentException('A valid resource id is required.');
         }
     }
 }
