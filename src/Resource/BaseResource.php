@@ -309,7 +309,7 @@ abstract class BaseResource
             throw new UnexpectedErrorException('An Unexpected Error has occurred: ' . $e->getMessage());
         }
 
-        $response = json_decode($response->getBody(), true);
+        $response = json_decode(strval($response->getBody()), true);
 
         if (isset($response['result']) && $response['result'] === 'error') {
             throw new AimtellException($response['message']);
