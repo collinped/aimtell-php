@@ -2,7 +2,6 @@
 
 namespace Collinped\Aimtell\Tests;
 
-use Collinped\Aimtell\Exception\RequestException;
 use InvalidArgumentException;
 
 class ResponseTest extends TestCase
