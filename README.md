@@ -72,7 +72,11 @@ $campaign = $aimtell->site($siteId)
 - Create Segment
 - Update Segment
 - Delete Segment
-- Get Segment Counts Over Time
+- Get Segment Counts Over Time (By Day)
+### Welcome Notification Campaign
+- Get Welcome Notification
+- Get Welcome Notification Campaign Results (By Day)
+- Update Welcome Notification (Upsert)
 
 ### Manual Campaigns
 - Get All Manual Campaigns
@@ -148,28 +152,28 @@ $aimtell = $aimtell->setWhiteLabelId($whiteLabelId);
 
 ### Sites
 
-#### Get All Websites
+#### Get All Websites - [Aimtell Docs](https://developers.aimtell.com/reference#get-all-websites)
 
 ``` php
 $websites = $aimtell->site()
                     ->all();
 ```
 
-#### Get Website
+#### Get Website - [Aimtell Docs](https://developers.aimtell.com/reference#api-get-website)
 
 ``` php
 $website = $aimtell->site()
                    ->find($siteId);
 ```
 
-#### Get Website Code
+#### Get Website Code - [Aimtell Docs](https://developers.aimtell.com/reference#get-website-code)
 
 ``` php
 $website = $aimtell->site($siteId)
                    ->getCode();
 ```
 
-#### Add Website
+#### Add Website - [Aimtell Docs](https://developers.aimtell.com/reference#add-website)
 
 ``` php
 $websites = $aimtell->site()
@@ -179,7 +183,7 @@ $websites = $aimtell->site()
                     ]);
 ```
 
-#### Update Website Details
+#### Update Website Details - [Aimtell Docs](https://developers.aimtell.com/reference#update-website)
 
 ``` php
 $websites = $aimtell->site($siteId)
@@ -190,14 +194,14 @@ $websites = $aimtell->site($siteId)
                     ]);
 ```
 
-#### Get Website Settings
+#### Get Website Settings - [Aimtell Docs](https://developers.aimtell.com/reference#api-get-website-settings)
 
 ``` php
 $websites = $aimtell->site($siteId)
                     ->getSettings();
 ```
 
-#### Update Website Settings
+#### Update Website Settings - [Aimtell Docs](https://developers.aimtell.com/reference#update-website-settings)
 
 ``` php
 $websites = $aimtell->site($siteId)
@@ -206,28 +210,28 @@ $websites = $aimtell->site($siteId)
                     ]);
 ```
 
-#### Update Website Package (Safari)
+#### Update Website Package (Safari) - [Aimtell Docs](https://developers.aimtell.com/reference#update-website-push-package-safari)
 
 ``` php
 $websites = $aimtell->site($siteId)
                     ->updatePackage();
 ```
 
-#### Delete Website
+#### Delete Website - [Aimtell Docs](https://developers.aimtell.com/reference#delete-website)
 
 ``` php
 $websites = $aimtell->site($siteId)
                     ->delete();
 ```
 
-#### Update Website Keys
+#### Get Website Keys - [Aimtell Docs](https://developers.aimtell.com/reference#api-get-website-keys)
 
 ``` php
 $websites = $aimtell->site($siteId)
                     ->getKeys();
 ```
 
-#### Upsert Website Keys
+#### Upsert Website Keys - [Aimtell Docs](https://developers.aimtell.com/reference#api-upsert-website-keys)
 
 ``` php
 $websites = $aimtell->site($siteId)
@@ -238,7 +242,7 @@ $websites = $aimtell->site($siteId)
 
 ### Subscribers
 
-#### Get All Subscribers
+#### Get All Subscribers - [Aimtell Docs](https://developers.aimtell.com/reference#get-subscribers)
 
 ``` php
 $subscribers = $aimtell->site($siteId)
@@ -246,7 +250,7 @@ $subscribers = $aimtell->site($siteId)
                        ->all();
 ```
 
-#### Get Subscriber
+#### Get Subscriber - [Aimtell Docs](https://developers.aimtell.com/reference#get-subscriber)
 
 ``` php
 $subscriber = $aimtell->site($siteId)
@@ -254,7 +258,7 @@ $subscriber = $aimtell->site($siteId)
                       ->find($subscriberId);
 ```
 
-#### Track Subscriber Attribute
+#### Track Subscriber Attribute - [Aimtell Docs](https://developers.aimtell.com/reference#api-track-subscriber-attribute)
 
 ``` php
 $subscriber = $aimtell->site($siteId)
@@ -265,7 +269,7 @@ $subscriber = $aimtell->site($siteId)
                       ]);
 ```
 
-#### Track Subscriber Event
+#### Track Subscriber Event - [Aimtell Docs](https://developers.aimtell.com/reference#api-track-subscriber-event)
 
 ``` php
 $subscriber = $aimtell->site($siteId)
@@ -277,7 +281,7 @@ $subscriber = $aimtell->site($siteId)
                           'value' => 1.00
                       ]);
 ```
-#### Opt-Out Subscriber
+#### Opt-Out Subscriber - [Aimtell Docs](https://developers.aimtell.com/reference#api-optout-subscriber)
 
 ``` php
 $subscriber = $aimtell->site($siteId)
@@ -285,9 +289,101 @@ $subscriber = $aimtell->site($siteId)
                       ->optOut();
 ```
 
+### Segments
+
+#### Get All Segments - [Aimtell Docs](https://developers.aimtell.com/reference#get-available-segments)
+
+``` php
+$segments = $aimtell->site($siteId)
+                       ->segment()
+                       ->all();
+```
+
+#### Get Segment - [Aimtell Docs](https://developers.aimtell.com/reference#get-segment)
+
+``` php
+$segment = $aimtell->site($siteId)
+                       ->segment()
+                       ->find($segmentId);
+```
+
+#### Create Segment - [Aimtell Docs](https://developers.aimtell.com/reference#create-segment)
+
+``` php
+$segment = $aimtell->site($siteId)
+                       ->segment()
+                       ->create([
+                           'name' => 'Segment Name'
+                           'definition' => 'city==Irvine' // See Aimtell Docs
+                       ]);
+```
+
+#### Update Segment - [Aimtell Docs](https://developers.aimtell.com/reference#update-segment)
+
+``` php
+$segment = $aimtell->site($siteId)
+                       ->segment($segmentId)
+                       ->update([
+                           'name' => 'Segment Name'
+                           'definition' => 'city==Irvine' // See Aimtell Docs
+                       ]);
+```
+
+#### Delete Segment - [Aimtell Docs](https://developers.aimtell.com/reference#delete-segment)
+
+``` php
+$segment = $aimtell->site($siteId)
+                       ->segment($segmentId)
+                       ->delete();
+```
+
+#### Get Segment Counts Over Time (By Day) - [Aimtell Docs](https://developers.aimtell.com/reference#api-get-segment-counts-over-time)
+
+``` php
+$results = $aimtell->site($siteId)
+                   ->segment($segmentId)
+                   ->getResultsByDate([
+                       'startDate' => '1/1/2020',
+                       'endDate' => '1/30/2020'
+                    ]);
+```
+### Welcome Notifications
+
+#### Get Welcome Notification - [Aimtell Docs](https://developers.aimtell.com/reference#api-get-welcome-campaign)
+
+``` php
+$welcomeNotification = $aimtell->site($siteId)
+                               ->welcomeNotification()
+                               ->get();
+```
+
+#### Get Welcome Notification Results (By Day) - [Aimtell Docs](https://developers.aimtell.com/reference#api-get-welcome-campaign-results-by-day)
+
+``` php
+$results = $aimtell->site($siteId)
+                   ->welcomeNotification()
+                   ->getResultsByDate([
+                       'startDate' => '1/1/2020',
+                       'endDate' => '1/30/2020'
+                    ]);
+```
+
+#### Update Welcome Notification (Upsert) - [Aimtell Docs](https://developers.aimtell.com/reference#api-upsert-welcome-campaign)
+
+``` php
+$welcomeNotification = $aimtell->site($siteId)
+                               ->welcomeNotification()
+                               ->update([
+                                   'title' => 'Welcome Title', // Required
+                                   'body' => 'Welcome body', // Required
+                                   'link' => 'http://facebook.com', // Required
+                                   'status' => '1' // Required - 0 = Draft, 1 = Active
+                               ]);
+```
+
 ### Manual Campaigns
 
-#### Get All Manual Campaigns
+#### Get All Manual Campaigns - [Aimtell Docs](https://developers.aimtell.com/reference#get-all-campaigns)
 
 ``` php
 $campaigns = $aimtell->site($siteId)
@@ -295,7 +391,7 @@ $campaigns = $aimtell->site($siteId)
                      ->all();
 ```
 
-#### Get Manual Campaign
+#### Get Manual Campaign - [Aimtell Docs](https://developers.aimtell.com/reference#get-campaign)
 
 ``` php
 $campaign = $aimtell->site($siteId)
@@ -303,7 +399,7 @@ $campaign = $aimtell->site($siteId)
                     ->find($campaignId);
 ```
 
-#### Get Manual Campaign Clicks
+#### Get Manual Campaign Clicks - [Aimtell Docs](https://developers.aimtell.com/reference#get-campaign-clicks)
 
 ``` php
 $campaign = $aimtell->site($siteId)
@@ -311,7 +407,7 @@ $campaign = $aimtell->site($siteId)
                     ->getClicks();
 ```
 
-#### Get Manual Campaign Results (By Day)
+#### Get Manual Campaign Results (By Day) - [Aimtell Docs](https://developers.aimtell.com/reference#get-manual-campaign-results-by-day)
 
 ``` php
 $campaign = $aimtell->site($siteId)
@@ -346,7 +442,7 @@ $campaign = $aimtell->site($siteId)
                     ]);
 ```
 
-#### Delete Manual Campaign
+#### Delete Manual Campaign - [Aimtell Docs](https://developers.aimtell.com/reference#delete-campaign)
 
 ``` php
 $campaign = $aimtell->site($siteId)
@@ -356,7 +452,7 @@ $campaign = $aimtell->site($siteId)
 
 ### Send Push Notifications
 
-#### Send a Push Notification
+#### Send a Push Notification - [Aimtell Docs](https://developers.aimtell.com/reference#api-send-push-notification)
 
 ``` php
 $notification = $aimtell->site($siteId)

@@ -11,6 +11,7 @@ use Collinped\Aimtell\Resource\RssNotification;
 use Collinped\Aimtell\Resource\Segment;
 use Collinped\Aimtell\Resource\Site;
 use Collinped\Aimtell\Resource\Subscriber;
+use Collinped\Aimtell\Resource\WelcomeNotification;
 use InvalidArgumentException;
 
 class Aimtell
@@ -248,6 +249,17 @@ class Aimtell
     public function segment(?string $segmentId = null): Segment
     {
         return new Segment($this, $segmentId);
+    }
+
+    /**
+     * Welcome Notification resource.
+     *
+     * @param string|null $welcomeNotificationId
+     * @return WelcomeNotification
+     */
+    public function welcomeNotification(?string $welcomeNotificationId = null): WelcomeNotification
+    {
+        return new WelcomeNotification($this, $welcomeNotificationId);
     }
 
     /**
