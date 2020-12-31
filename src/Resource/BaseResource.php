@@ -157,6 +157,7 @@ abstract class BaseResource
      * Find a resource by id.
      *
      * @param string $id
+     * @param array $query
      * @return mixed
      * @throws AimtellException
      * @throws AuthorizationException
@@ -165,13 +166,14 @@ abstract class BaseResource
      * @throws UnexpectedErrorException
      * @throws GuzzleException
      */
-    public function find(string $id)
+    public function find(string $id, array $query = [])
     {
         $this->guardMethod(__FUNCTION__);
 
         return $this->sendRequest(
             'GET',
-            $this->resourceName(). '/' .$id
+            $this->resourceName(). '/' .$id,
+            $query
         );
     }
 
